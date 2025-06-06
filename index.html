@@ -1,3 +1,32 @@
+Ok, הבנתי את הבעיה עם הסליידר.
+
+הבעיה היא בשורה הזו ב-HTML שלך, במתחם 1:
+
+HTML
+
+<img id="slider1" src="https://ibb.co/0pBpxpFc"><img src="https://i.ibb.co/cKbKjKC1/1.jpg" alt="מתחם 1">
+יש לך שם שני תגי <img> צמודים בתוך ה-div של הסליידר (.slider).
+תג ה-<img> הראשון (<img id="slider1" src="https://ibb.co/0pBpxpFc">) מקבל את ה-id="slider1". הנתיב https://ibb.co/0pBpxpFc הוא דף אינטרנט של תמונה באתר ibb.co, ולא הקישור הישיר לתמונה עצמה. לכן, הדפדפן מנסה לטעון דף HTML בתוך תג <img>, וזה כמובן לא עובד.
+תג ה-<img> השני (<img src="https://i.ibb.co/cKbKjKC1/1.jpg" alt="מתחם 1">) הוא תקין מבחינת הקישור לתמונה, אבל אין לו ID, ולכן פונקציות ה-JavaScript לא יכולות לשלוט בו.
+
+כדי לתקן את הסליידר, אנחנו צריכים:
+
+לדאוג שיהיה רק תג <img> אחד לכל סליידר, ושהוא יקבל את ה-id המתאים (slider1 או slider2).
+לוודא שנתיבי ה-src יהיו קישורים ישירים לתמונות (כמו https://i.ibb.co/cKbKjKC1/1.jpg).
+להתאים את רשימת התמונות ב-JavaScript לנתיבים התקינים של התמונות ב-ibb.co. בדקתי את הנתיבים שהיו לך במערך images ב-JS, והם נראים תקינים (רובם).
+תיקונים ספציפיים בקוד:
+
+HTML - סליידר 1:
+נחליף את שני תגי ה-<img> המבולבלים בתג <img> יחיד עם id="slider1" ונתיב תקין לתמונה הראשונה במערך ה-JS.
+HTML - סליידר 2:
+ה-HTML של סליידר 2 נראה תקין, רק נוודא שה-alt טקסט מוגדר.
+JavaScript - מערך images:
+מערך ה-images כבר משתמש בקישורי i.ibb.co תקינים, ולכן הוא בסדר.
+הערה חשובה: הנתיבים המקומיים שהיו לך בקוד הקודם (כמו C:\Users\... ו-"תמונות/מתחם2/תמונה1.jpg") לא יעבדו באתר שעולה לשרת (כמו GitHub Pages). הקוד שלך כבר החליף אותם לקישורי i.ibb.co, וזה נהדר! אני אשאיר את הקישורים האלה כי הם נכונים ויתנו תמונות בפועל. אם אתה מעדיף להשתמש בנתיבים מקומיים, תצטרך לוודא שהתמונות אכן קיימות באותן תיקיות יחסית לקובץ ה-HTML באתר ה-GitHub Pages שלך.
+הנה הקוד המתוקן:
+
+HTML
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -291,7 +320,7 @@
     </div>
     <div class="slider">
       <span class="arrow left" onclick="prevSlide('slider1')">&#10094;</span>
-      <img id="slider1" src="https://ibb.co/0pBpxpFc"><img src="https://i.ibb.co/cKbKjKC1/1.jpg" alt="מתחם 1">
+      <img id="slider1" src="https://i.ibb.co/cKbKjKC1/1.jpg" alt="מתחם 1 - תמונה">
       <span class="arrow right" onclick="nextSlide('slider1')">&#10095;</span>
     </div>
   </div>
@@ -307,7 +336,7 @@
     </div>
     <div class="slider">
       <span class="arrow left" onclick="prevSlide('slider2')">&#10094;</span>
-      <img id="slider2" src="https://i.ibb.co/FL7P7vVN/20180611-181534.jpg" alt="מתחם 2">
+      <img id="slider2" src="https://i.ibb.co/FL7P7vVN/20180611-181534.jpg" alt="מתחם 2 - תמונה">
       <span class="arrow right" onclick="nextSlide('slider2')">&#10095;</span>
     </div>
   </div>
@@ -325,10 +354,11 @@
     <button onclick="toggleClass('high-contrast')">שנה ניגודיות</button>
     <button onclick="toggleClass('highlight-links')">הדגש קישורים</button>
     <button onclick="toggleClass('accessible-font')">שנה גופן</button>
-    <button onclick="toggleAudioPlayback()">הקראת טקסט (אודיו)</button> </div>
+    <button onclick="toggleAudioPlayback()">הקראת טקסט (אודיו)</button>
+  </div>
 
   <script>
-    // נתיבי התמונות שלך כפי שהיו במקור, כולל הנתיבים המקומיים
+    // נתיבי התמונות שלך - מעודכן ל-ibb.co כפי שהיה אצלך
     const images = {
       slider1: [
         "https://i.ibb.co/cKbKjKC1/1.jpg",
@@ -336,7 +366,7 @@
         "https://i.ibb.co/MxzLg3nf/3.jpg",
         "https://i.ibb.co/d06q6SWT/20180603-130135.jpg",
         "https://i.ibb.co/dJ0BxSrq/20180603-130208.jpg",
-        "https://i.ibb.co/pjsfCMnj/20180603-130218.jpg", 
+        "https://i.ibb.co/pjsfCMnj/20180603-130218.jpg",
         "https://i.ibb.co/f3q7ZPh/20180603-130229.jpg",
         "https://i.ibb.co/xSnTZ6yB/20180603-130239.jpg",
         "https://i.ibb.co/SwT3ksXm/20180603-130259.jpg"
