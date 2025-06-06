@@ -1,5 +1,192 @@
-<!-- ... חלק ה-HEAD נשאר זהה ... -->
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>דירות אירוח פישמן</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to top left, #f3f3f3, #e0e0e0);
+      color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
 
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 2.4em;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .intro {
+      max-width: 800px;
+      margin: 40px auto 20px;
+      padding: 0 20px;
+      font-size: 1.2em;
+      text-align: center;
+      color: #555;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      margin: 30px 0;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .buttons button {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background: #34495e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .buttons button:hover {
+      background-color: #1abc9c;
+      transform: scale(1.05);
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.8s ease-in-out forwards;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .description {
+      max-width: 800px;
+      margin: 0 auto 20px;
+      padding: 0 20px;
+      font-size: 1.1em;
+      line-height: 1.7;
+      color: #444;
+      text-align: center;
+    }
+
+    .slider {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      text-align: center;
+    }
+
+    .slider img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .arrow {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: #fff;
+      background-color: rgba(0,0,0,0.4);
+      padding: 10px;
+      border-radius: 50%;
+      user-select: none;
+      transition: background 0.3s;
+    }
+
+    .arrow:hover {
+      background-color: rgba(0,0,0,0.7);
+    }
+
+    .arrow.right {
+      right: 10px;
+    }
+
+    .arrow.left {
+      left: 10px;
+    }
+
+    footer {
+      text-align: center;
+      margin: 60px 0 30px;
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* --- Accessibility Styles --- */
+    .high-contrast {
+      background: black !important;
+      color: yellow !important;
+    }
+
+    .large-text {
+      font-size: 1.5em !important;
+    }
+
+    .accessible-font {
+      font-family: Arial, sans-serif !important;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .highlight-links a {
+      text-decoration: underline !important;
+      color: #ff6600 !important;
+      font-weight: bold;
+    }
+
+    .no-animation * {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    /* Accessibility button */
+    .accessibility-panel {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: white;
+      border: 2px solid #aaa;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+
+    .accessibility-panel button {
+      display: block;
+      margin: 5px 0;
+      padding: 10px;
+      width: 180px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9em;
+      cursor: pointer;
+    }
+
+    .accessibility-panel button:hover {
+      background-color: #1abc9c;
+    }
+  </style>
+</head>
 <body>
 
   <header>
@@ -17,34 +204,50 @@
     <button onclick="showSection('area2')">מתחם הזוגות והמשפחות הקטנות</button>
   </div>
 
-  <!-- 🔊 כפתורי הקראת תוכן -->
-  <div class="audio-btn">
-    <button onclick="document.getElementById('audioPlayer').play()">▶️ הקראת תוכן</button>
-    <button onclick="document.getElementById('audioPlayer').pause()">⏸️ עצור הקראה</button>
-  </div>
-  <audio id="audioPlayer" src="https://raw.githubusercontent.com/MeronFishman/052-281-5211/main/FishmanAudio.wav"></audio>
-
-  <!-- 📝 תמלול לאנשים חירשים -->
-  <div style="text-align: center; max-width: 800px; margin: 10px auto 30px; padding: 0 20px; font-size: 1.05em; line-height: 1.6; color: #222; background: #f9f9f9; border: 1px solid #ddd; border-radius: 10px;">
-    <strong>תמלול מוקרא מהאודיו:</strong><br>
-    ברוכים הבאים לדירות האירוח פישמן במירון!  
-    תוכלו לבחור בין מתחם גדול למשפחות וקבוצות, ובין דירות אינטימיות לזוגות ומשפחות קטנות.  
-    כל דירה מאובזרת, נקייה ומוכנה לאירוח לבבי.  
-    נשמח לארח אתכם באווירה חמימה עם שירות אישי.
-  </div>
-
-  <!-- 🏘️ המתחמים ותמונות -->
   <div id="area1" class="section">
-    <!-- ... נשאר כמו קודם ... -->
+    <div class="description">
+      <h2>מתחם המשפחות והקבוצות</h2>
+      <p>
+        5 דירות אירוח , בכל דירה: 8 מיטות, פינת אוכל משפחתית, מטבח, שירותים ומקלחת.  
+        <br>
+        במתחם: גינה ענקית עם דשא ירוק, נדנדות לילדים, וסככות רשת צל לאירוח מפנק באוויר הצח של מירון.
+      </p>
+    </div>
+    <div class="slider">
+      <span class="arrow left" onclick="prevSlide('slider1')">&#10094;</span>
+      <img id="slider1" src="https://i.ibb.co/cKbKjKC1/1.jpg" alt="מתחם 1">
+      <span class="arrow right" onclick="nextSlide('slider1')">&#10095;</span>
+    </div>
   </div>
 
   <div id="area2" class="section">
-    <!-- ... נשאר כמו קודם ... -->
+    <div class="description">
+      <h2>מתחם הזוגות והמשפחות הקטנות</h2>
+      <p>
+        דירות אירוח לזוגות או משפחות של 3 עד 5 נפשות.  
+        <br>
+        אווירה מדהימה ושירות חם ומסור שיגרום לכם לרצות לחזור שוב.
+      </p>
+    </div>
+    <div class="slider">
+      <span class="arrow left" onclick="prevSlide('slider2')">&#10094;</span>
+      <img id="slider2" src="https://i.ibb.co/FL7P7vVN/20180611-181534.jpg">
+      <span class="arrow right" onclick="nextSlide('slider2')">&#10095;</span>
+    </div>
   </div>
 
   <footer>
     <span style="color: green;">📞</span> 052-281-5211 | ✉️ mendyf862@gmail.com
   </footer>
+
+  <!-- Accessibility Panel -->
+  <div class="accessibility-panel">
+    <button onclick="toggleClass('large-text')">שנה גודל טקסט</button>
+    <button onclick="toggleClass('high-contrast')">שנה ניגודיות</button>
+    <button onclick="toggleClass('highlight-links')">הדגש קישורים</button>
+    <button onclick="toggleClass('accessible-font')">שנה גופן</button>
+    <button onclick="toggleClass('no-animation')">עצור אנימציות</button>
+  </div>
 
   <script>
     const images = {
@@ -92,6 +295,11 @@
       indices[id] = (indices[id] - 1 + images[id].length) % images[id].length;
       document.getElementById(id).src = images[id][indices[id]];
     }
+
+    function toggleClass(className) {
+      document.body.classList.toggle(className);
+    }
   </script>
+
 </body>
 </html>
