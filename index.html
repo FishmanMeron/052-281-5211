@@ -61,7 +61,6 @@
     .section {
       display: none;
       animation: fadeIn 0.8s ease-in-out forwards;
-      /* לוודא שהסקשן מכיל את ה-slider בצורה נכונה */
       padding-bottom: 20px; /* רווח תחתון לכל סקשן */
     }
 
@@ -79,30 +78,20 @@
       text-align: center;
     }
 
-    /* CSS עבור הסליידר - תיקונים */
     .slider {
       position: relative;
       max-width: 700px;
-      margin: 0 auto 50px; /* הגדלת רווח תחתון לסליידר */
+      margin: 0 auto 50px;
       text-align: center;
-      overflow: hidden; /* חובה כדי שהתמונות ימוקמו נכון וייחתכו בקצוות */
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    .slides-container {
-        display: flex; /* ימקם את התמונות זו ליד זו */
-        width: 100%; /* רוחב של הקונטיינר הכולל */
-        transition: transform 0.5s ease-in-out; /* אנימציית מעבר חלקה */
     }
 
     .slider img {
-        min-width: 100%; /* כל תמונה תתפוס 100% מרוחב ה-slides-container */
-        max-width: 100%;
-        height: auto; /* שמירה על יחס גובה-רוחב */
-        display: block;
-        border-radius: 0; /* ה-border-radius עבר לקונטיינר .slider הראשי */
-        box-shadow: none; /* ה-box-shadow עבר לקונטיינר .slider הראשי */
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      /* ודא שהתמונות בגבהים שונים לא ישברו את הפריסה, אם הן אכן בגדלים שונים */
+      height: auto; /* חשוב לשמירה על יחס הגודל */
+      object-fit: contain; /* יכול לעזור אם יש לך תמונות בפרופורציות שונות בתוך אותו סליידר */
     }
 
     .arrow {
@@ -117,7 +106,7 @@
       border-radius: 50%;
       user-select: none;
       transition: background 0.3s;
-      z-index: 10; /* לוודא שהחצים מעל התמונות */
+      z-index: 10;
     }
 
     .arrow:hover {
@@ -139,7 +128,6 @@
       color: #555;
     }
 
-    /* קלאס חדש לאייקונים ירוקים */
     .icon-green {
       color: green;
     }
@@ -154,41 +142,38 @@
       background: black !important;
       color: yellow !important;
     }
-    .high-contrast header { /* גם הכותרת צריכה להשתנות */
+    .high-contrast header {
         background-color: #333 !important;
         color: yellow !important;
     }
-    .high-contrast .buttons button { /* גם כפתורי הבחירה צריכים להשתנות */
+    .high-contrast .buttons button {
         background-color: #555 !important;
         color: yellow !important;
         border: 1px solid yellow !important;
     }
-    .high-contrast .accessibility-panel { /* גם פאנל הנגישות עצמו */
+    .high-contrast .accessibility-panel {
         background: black !important;
         border: 2px solid yellow !important;
     }
-    .high-contrast .accessibility-panel button { /* כפתורי הנגישות */
+    .high-contrast .accessibility-panel button {
         background-color: #555 !important;
         color: yellow !important;
         border: 1px solid yellow !important;
     }
-
 
     .large-text {
       font-size: 1.5em !important;
     }
-    /* התאמות נוספות לגודל טקסט כדי למנוע גלישה */
     .large-text .intro, .large-text .description, .large-text footer {
-        font-size: 1.6em !important; /* הגדלה נוספת לטקסטים מסוימים */
+        font-size: 1.6em !important;
     }
     .large-text .buttons button {
         font-size: 1.4em !important;
-        padding: 18px 35px !important; /* הגדלת ריפוד לכפתורים */
+        padding: 18px 35px !important;
     }
     .large-text header {
         font-size: 2.8em !important;
     }
-
 
     .accessible-font {
       font-family: Arial, sans-serif !important;
@@ -214,16 +199,14 @@
     .accessibility-panel {
       position: fixed;
       bottom: 20px;
-      /* שינוי מ-left ל-right כדי שלא יתנגש עם תוכן RTL */
-      right: 20px;
+      right: 20px; /* ממוקם בצד ימין למנוע התנגשות עם כפתור הטוגל */
       background: white;
       border: 2px solid #aaa;
       padding: 10px;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       z-index: 1000;
-      /* הסתרה בהתחלה */
-      display: none;
+      display: none; /* נסתר כברירת מחדל */
       flex-direction: column;
       align-items: flex-end; /* יישור הכפתורים לימין בתוך הפאנל */
     }
@@ -254,18 +237,18 @@
     #accessibility-toggle-button {
         position: fixed;
         bottom: 20px;
-        left: 20px; /* שומרים אותו בצד שמאל */
+        left: 20px; /* נשאר בצד שמאל */
         background-color: #2c3e50;
         color: white;
         padding: 15px 20px;
-        border-radius: 50%; /* צורה עגולה */
+        border-radius: 50%;
         font-size: 1.2em;
         font-weight: bold;
         cursor: pointer;
         box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        z-index: 1001; /* לוודא שהוא מעל הפאנל */
+        z-index: 1001;
         border: none;
-        width: 60px; /* רוחב וגובה שווים לעיגול */
+        width: 60px;
         height: 60px;
         display: flex;
         justify-content: center;
@@ -276,7 +259,6 @@
     #accessibility-toggle-button:hover {
         background-color: #1abc9c;
     }
-
 
   </style>
 </head>
@@ -307,19 +289,10 @@
         במתחם: גינה ענקית עם דשא ירוק, נדנדות לילדים, וסככות רשת צל לאירוח מפנק באוויר הצח של מירון.
       </p>
     </div>
-    <div class="slider" id="slider-area1">
-      <span class="arrow left" onclick="prevSlide('slider-area1')">&#10094;</span>
-      <div class="slides-container">
-        <img src="https://i.ibb.co/cKbKjKC1/1.jpg" alt="מתחם 1 - תמונה 1">
-        <img src="https://i.ibb.co/qF1LQ0XP/2.jpg" alt="מתחם 1 - תמונה 2">
-        <img src="https://i.ibb.co/MxzLg3nf/3.jpg" alt="מתחם 1 - תמונה 3">
-        <img src="https://i.ibb.co/dJ0BxSrq/20180603-130208.jpg" alt="מתחם 1 - תמונה 4">
-        <img src="https://i.ibb.co/pjsfCMnj/20180603-130218.jpg" alt="מתחם 1 - תמונה 5">
-        <img src="https://i.ibb.co/f3q7ZPh/20180603-130229.jpg" alt="מתחם 1 - תמונה 6">
-        <img src="https://i.ibb.co/xSnTZ6yB/20180603-130239.jpg" alt="מתחם 1 - תמונה 7">
-        <img src="https://i.ibb.co/SwT3ksXm/20180603-130259.jpg" alt="מתחם 1 - תמונה 8">
-      </div>
-      <span class="arrow right" onclick="nextSlide('slider-area1')">&#10095;</span>
+    <div class="slider">
+      <span class="arrow left" onclick="prevSlide('slider1')">&#10094;</span>
+      <img id="slider1" src="C:\Users\97254\Desktop\תמונות חדשות לעסק של אבא רחפן\תמונות מתחם 1\תמונה 1.jpg" alt="מתחם 1">
+      <span class="arrow right" onclick="nextSlide('slider1')">&#10095;</span>
     </div>
   </div>
 
@@ -332,24 +305,10 @@
         אווירה מדהימה ושירות חם ומסור שיגרום לכם לרצות לחזור שוב.
       </p>
     </div>
-    <div class="slider" id="slider-area2">
-      <span class="arrow left" onclick="prevSlide('slider-area2')">&#10094;</span>
-      <div class="slides-container">
-        <img src="https://i.ibb.co/FL7P7vVN/20180611-181534.jpg" alt="מתחם 2 - תמונה 1">
-        <img src="https://i.ibb.co/YB0yHBd4/20180611-181553.jpg" alt="מתחם 2 - תמונה 2">
-        <img src="https://i.ibb.co/84SX3H9L/20180611-181627.jpg" alt="מתחם 2 - תמונה 3">
-        <img src="https://i.ibb.co/sp3m3Ctm/20180611-181638.jpg" alt="מתחם 2 - תמונה 4">
-        <img src="https://i.ibb.co/mCd3qzKY/20180611-181645.jpg" alt="מתחם 2 - תמונה 5">
-        <img src="https://i.ibb.co/pBBWQD4v/20180611-181830.jpg" alt="מתחם 2 - תמונה 6">
-        <img src="https://i.ibb.co/pBjGGb4Y/20180611-181839.jpg" alt="מתחם 2 - תמונה 7">
-        <img src="https://i.ibb.co/Mx9r3gtc/20180611-181846.jpg" alt="מתחם 2 - תמונה 8">
-        <img src="https://i.ibb.co/CXTfKBf/20180611-181853.jpg" alt="מתחם 2 - תמונה 9">
-        <img src="https://i.ibb.co/9HNLQ8zM/20180611-181924.jpg" alt="מתחם 2 - תמונה 10">
-        <img src="https://i.ibb.co/Q3GJ48Jz/20180611-182006.jpg" alt="מתחם 2 - תמונה 11">
-        <img src="https://i.ibb.co/vvMThMkC/20180611-182016.jpg" alt="מתחם 2 - תמונה 12">
-        <img src="https://i.ibb.co/67pZmQKb/20180611-181516.jpg" alt="מתחם 2 - תמונה 13">
-      </div>
-      <span class="arrow right" onclick="nextSlide('slider-area2')">&#10095;</span>
+    <div class="slider">
+      <span class="arrow left" onclick="prevSlide('slider2')">&#10094;</span>
+      <img id="slider2" src="תמונות/מתחם2/תמונה1.jpg" alt="מתחם 2">
+      <span class="arrow right" onclick="nextSlide('slider2')">&#10095;</span>
     </div>
   </div>
 
@@ -366,54 +325,41 @@
     <button onclick="toggleClass('high-contrast')">שנה ניגודיות</button>
     <button onclick="toggleClass('highlight-links')">הדגש קישורים</button>
     <button onclick="toggleClass('accessible-font')">שנה גופן</button>
-    <button onclick="toggleClass('no-animation')">עצור אנימציות</button>
-  </div>
+    <button onclick="toggleAudioPlayback()">הקראת טקסט (אודיו)</button> </div>
 
   <script>
-    // שינוי במבנה הנתונים - לא נשמור כאן נתיבים, אלא ננהל את הסליידרים ישירות
-    const slideIndices = { 'slider-area1': 0, 'slider-area2': 0 }; // ישמור את האינדקס של התמונה הנוכחית לכל סליידר
+    // נתיבי התמונות שלך כפי שהיו במקור, כולל הנתיבים המקומיים
+    const images = {
+      slider1: [
+        "C:\\Users\\97254\\Desktop\\תמונות חדשות לעסק של אבא רחפן\\תמונות מתחם 1\\תמונה 1.jpg",
+        "C:\\Users\\97254\\Desktop\\תמונות חדשות לעסק של אבא רחפן\\תמונות מתחם 1\\תמונה 2.jpg",
+        "C:\\Users\\97254\\Desktop\\תמונות חדשות לעסק של אבא רחפן\\תמונות מתחם 1\\תמונה 3.jpg"
+      ],
+      slider2: [
+        "תמונות/מתחם2/תמונה1.jpg",
+        "תמונות/מתחם2/תמונה2.jpg",
+        "תמונות/מתחם2/תמונה3.jpg"
+      ]
+    };
+
+    const indices = { slider1: 0, slider2: 0 };
 
     function showSection(id) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      // כשמציגים סקשן חדש, ודא שהסליידר שלו מתחיל מהתמונה הראשונה
-      const sliderId = `slider-${id}`; // לדוגמה 'slider-area1'
-      if (document.getElementById(sliderId)) {
-        slideIndices[sliderId] = 0;
-        updateSlide(sliderId); // הצג את התמונה הראשונה
-      }
     }
 
-    function updateSlide(sliderId) {
-        const sliderElement = document.getElementById(sliderId);
-        const slidesContainer = sliderElement.querySelector('.slides-container');
-        const images = slidesContainer.querySelectorAll('img');
-        const currentSlideIndex = slideIndices[sliderId];
-
-        // ודא שהאינדקס תקין
-        if (images.length === 0) return; // אין תמונות בסליידר
-
-        // חישוב ההזזה
-        const offset = -currentSlideIndex * 100; // הזז ב-100% לכל רוחב תמונה
-        slidesContainer.style.transform = `translateX(${offset}%)`;
+    function nextSlide(id) {
+      indices[id] = (indices[id] + 1) % images[id].length;
+      document.getElementById(id).src = images[id][indices[id]];
     }
 
-    function nextSlide(sliderId) {
-      const slidesContainer = document.getElementById(sliderId).querySelector('.slides-container');
-      const images = slidesContainer.querySelectorAll('img');
-      slideIndices[sliderId] = (slideIndices[sliderId] + 1) % images.length;
-      updateSlide(sliderId);
+    function prevSlide(id) {
+      indices[id] = (indices[id] - 1 + images[id].length) % images[id].length;
+      document.getElementById(id).src = images[id][indices[id]];
     }
 
-    function prevSlide(sliderId) {
-      const slidesContainer = document.getElementById(sliderId).querySelector('.slides-container');
-      const images = slidesContainer.querySelectorAll('img');
-      slideIndices[sliderId] = (slideIndices[sliderId] - 1 + images.length) % images.length;
-      updateSlide(sliderId);
-    }
-
-    // פונקציית טוגל קלאס כללית ל-body
     function toggleClass(className) {
       document.body.classList.toggle(className);
     }
@@ -423,13 +369,30 @@
         document.getElementById('accessibility-panel').classList.toggle('active');
     }
 
-    // קריאה ראשונית להצגת התמונה הראשונה בכל סליידר כאשר הדף נטען
-    document.addEventListener('DOMContentLoaded', () => {
-        // ודא שכל הסליידרים מעודכנים לתמונה הראשונה במצב התחלתי
-        Object.keys(slideIndices).forEach(id => {
-            updateSlide(id);
-        });
+    // פונקציות להקראת טקסט (השמעת אודיו)
+    const audioPlayer = new Audio('https://raw.githubusercontent.com/MeronFishman/052-281-5211/main/FishmanAudio.wav');
+    let isPlaying = false;
+
+    function toggleAudioPlayback() {
+        if (isPlaying) {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // אחזור להתחלה
+            isPlaying = false;
+        } else {
+            audioPlayer.play();
+            isPlaying = true;
+        }
+    }
+
+    // לוודא שאודיו נכבה אם עוזבים את הדף או משהו כזה
+    window.addEventListener('beforeunload', () => {
+        if (isPlaying) {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            isPlaying = false;
+        }
     });
+
   </script>
 
 </body>
