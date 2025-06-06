@@ -11,6 +11,8 @@
       background: linear-gradient(to top left, #f3f3f3, #e0e0e0);
       color: #333;
       transition: background 0.3s, color 0.3s;
+      /* הוספת padding תחתון כדי למנוע חפיפה עם כפתור הנגישות הצף */
+      padding-bottom: 80px; /* גודל כפתור הנגישות + רווח */
     }
 
     header {
@@ -59,6 +61,8 @@
     .section {
       display: none;
       animation: fadeIn 0.8s ease-in-out forwards;
+      /* לוודא שהסקשן מכיל את ה-slider בצורה נכונה */
+      padding-bottom: 20px; /* רווח תחתון לכל סקשן */
     }
 
     .active {
@@ -75,17 +79,30 @@
       text-align: center;
     }
 
+    /* CSS עבור הסליידר - תיקונים */
     .slider {
       position: relative;
       max-width: 700px;
-      margin: 0 auto 50px;
+      margin: 0 auto 50px; /* הגדלת רווח תחתון לסליידר */
       text-align: center;
+      overflow: hidden; /* חובה כדי שהתמונות ימוקמו נכון וייחתכו בקצוות */
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .slides-container {
+        display: flex; /* ימקם את התמונות זו ליד זו */
+        width: 100%; /* רוחב של הקונטיינר הכולל */
+        transition: transform 0.5s ease-in-out; /* אנימציית מעבר חלקה */
     }
 
     .slider img {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        min-width: 100%; /* כל תמונה תתפוס 100% מרוחב ה-slides-container */
+        max-width: 100%;
+        height: auto; /* שמירה על יחס גובה-רוחב */
+        display: block;
+        border-radius: 0; /* ה-border-radius עבר לקונטיינר .slider הראשי */
+        box-shadow: none; /* ה-box-shadow עבר לקונטיינר .slider הראשי */
     }
 
     .arrow {
@@ -100,6 +117,7 @@
       border-radius: 50%;
       user-select: none;
       transition: background 0.3s;
+      z-index: 10; /* לוודא שהחצים מעל התמונות */
     }
 
     .arrow:hover {
@@ -121,6 +139,11 @@
       color: #555;
     }
 
+    /* קלאס חדש לאייקונים ירוקים */
+    .icon-green {
+      color: green;
+    }
+
     @keyframes fadeIn {
       from {opacity: 0; transform: translateY(30px);}
       to {opacity: 1; transform: translateY(0);}
@@ -131,10 +154,41 @@
       background: black !important;
       color: yellow !important;
     }
+    .high-contrast header { /* גם הכותרת צריכה להשתנות */
+        background-color: #333 !important;
+        color: yellow !important;
+    }
+    .high-contrast .buttons button { /* גם כפתורי הבחירה צריכים להשתנות */
+        background-color: #555 !important;
+        color: yellow !important;
+        border: 1px solid yellow !important;
+    }
+    .high-contrast .accessibility-panel { /* גם פאנל הנגישות עצמו */
+        background: black !important;
+        border: 2px solid yellow !important;
+    }
+    .high-contrast .accessibility-panel button { /* כפתורי הנגישות */
+        background-color: #555 !important;
+        color: yellow !important;
+        border: 1px solid yellow !important;
+    }
+
 
     .large-text {
       font-size: 1.5em !important;
     }
+    /* התאמות נוספות לגודל טקסט כדי למנוע גלישה */
+    .large-text .intro, .large-text .description, .large-text footer {
+        font-size: 1.6em !important; /* הגדלה נוספת לטקסטים מסוימים */
+    }
+    .large-text .buttons button {
+        font-size: 1.4em !important;
+        padding: 18px 35px !important; /* הגדלת ריפוד לכפתורים */
+    }
+    .large-text header {
+        font-size: 2.8em !important;
+    }
+
 
     .accessible-font {
       font-family: Arial, sans-serif !important;
@@ -156,17 +210,26 @@
       transition: none !important;
     }
 
-    /* Accessibility button */
+    /* Accessibility panel - מיקום ועיצוב */
     .accessibility-panel {
       position: fixed;
       bottom: 20px;
-      left: 20px;
+      /* שינוי מ-left ל-right כדי שלא יתנגש עם תוכן RTL */
+      right: 20px;
       background: white;
       border: 2px solid #aaa;
       padding: 10px;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       z-index: 1000;
+      /* הסתרה בהתחלה */
+      display: none;
+      flex-direction: column;
+      align-items: flex-end; /* יישור הכפתורים לימין בתוך הפאנל */
+    }
+
+    .accessibility-panel.active {
+        display: flex; /* הצג כשהוא פעיל */
     }
 
     .accessibility-panel button {
@@ -180,11 +243,41 @@
       border-radius: 8px;
       font-size: 0.9em;
       cursor: pointer;
+      text-align: center;
     }
 
     .accessibility-panel button:hover {
       background-color: #1abc9c;
     }
+
+    /* כפתור פתיחת הנגישות - צף בפינה השמאלית */
+    #accessibility-toggle-button {
+        position: fixed;
+        bottom: 20px;
+        left: 20px; /* שומרים אותו בצד שמאל */
+        background-color: #2c3e50;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 50%; /* צורה עגולה */
+        font-size: 1.2em;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        z-index: 1001; /* לוודא שהוא מעל הפאנל */
+        border: none;
+        width: 60px; /* רוחב וגובה שווים לעיגול */
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.3s ease;
+    }
+
+    #accessibility-toggle-button:hover {
+        background-color: #1abc9c;
+    }
+
+
   </style>
 </head>
 <body>
@@ -194,8 +287,9 @@
   </header>
 
   <div class="intro">
-    בחרו את המתחם שמתאים לכם:  
-    <strong>מתחם למשפחות/קבוצות</strong> או <strong>מתחם לזוגות/משפחות קטנות</strong>.  
+    בחרו את המתחם שמתאים לכם:
+    <strong>מתחם למשפחות/קבוצות</strong> או <strong>מתחם לזוגות/משפחות קטנות</strong>.
+    <br>
     לאחר הבחירה, יוצגו תמונות ותיאור מפורט של הדירות.
   </div>
 
@@ -208,15 +302,24 @@
     <div class="description">
       <h2>מתחם המשפחות והקבוצות</h2>
       <p>
-        5 דירות אירוח , בכל דירה: 8 מיטות, פינת אוכל משפחתית, מטבח, שירותים ומקלחת.  
+        5 דירות אירוח , בכל דירה: 8 מיטות, פינת אוכל משפחתית, מטבח, שירותים ומקלחת.
         <br>
         במתחם: גינה ענקית עם דשא ירוק, נדנדות לילדים, וסככות רשת צל לאירוח מפנק באוויר הצח של מירון.
       </p>
     </div>
-    <div class="slider">
-      <span class="arrow left" onclick="prevSlide('slider1')">&#10094;</span>
-      <img id="slider1" src="https://i.ibb.co/cKbKjKC1/1.jpg" alt="מתחם 1">
-      <span class="arrow right" onclick="nextSlide('slider1')">&#10095;</span>
+    <div class="slider" id="slider-area1">
+      <span class="arrow left" onclick="prevSlide('slider-area1')">&#10094;</span>
+      <div class="slides-container">
+        <img src="https://i.ibb.co/cKbKjKC1/1.jpg" alt="מתחם 1 - תמונה 1">
+        <img src="https://i.ibb.co/qF1LQ0XP/2.jpg" alt="מתחם 1 - תמונה 2">
+        <img src="https://i.ibb.co/MxzLg3nf/3.jpg" alt="מתחם 1 - תמונה 3">
+        <img src="https://i.ibb.co/dJ0BxSrq/20180603-130208.jpg" alt="מתחם 1 - תמונה 4">
+        <img src="https://i.ibb.co/pjsfCMnj/20180603-130218.jpg" alt="מתחם 1 - תמונה 5">
+        <img src="https://i.ibb.co/f3q7ZPh/20180603-130229.jpg" alt="מתחם 1 - תמונה 6">
+        <img src="https://i.ibb.co/xSnTZ6yB/20180603-130239.jpg" alt="מתחם 1 - תמונה 7">
+        <img src="https://i.ibb.co/SwT3ksXm/20180603-130259.jpg" alt="מתחם 1 - תמונה 8">
+      </div>
+      <span class="arrow right" onclick="nextSlide('slider-area1')">&#10095;</span>
     </div>
   </div>
 
@@ -224,24 +327,41 @@
     <div class="description">
       <h2>מתחם הזוגות והמשפחות הקטנות</h2>
       <p>
-        דירות אירוח לזוגות או משפחות של 3 עד 5 נפשות.  
+        דירות אירוח לזוגות או משפחות של 3 עד 5 נפשות.
         <br>
         אווירה מדהימה ושירות חם ומסור שיגרום לכם לרצות לחזור שוב.
       </p>
     </div>
-    <div class="slider">
-      <span class="arrow left" onclick="prevSlide('slider2')">&#10094;</span>
-      <img id="slider2" src="https://i.ibb.co/FL7P7vVN/20180611-181534.jpg">
-      <span class="arrow right" onclick="nextSlide('slider2')">&#10095;</span>
+    <div class="slider" id="slider-area2">
+      <span class="arrow left" onclick="prevSlide('slider-area2')">&#10094;</span>
+      <div class="slides-container">
+        <img src="https://i.ibb.co/FL7P7vVN/20180611-181534.jpg" alt="מתחם 2 - תמונה 1">
+        <img src="https://i.ibb.co/YB0yHBd4/20180611-181553.jpg" alt="מתחם 2 - תמונה 2">
+        <img src="https://i.ibb.co/84SX3H9L/20180611-181627.jpg" alt="מתחם 2 - תמונה 3">
+        <img src="https://i.ibb.co/sp3m3Ctm/20180611-181638.jpg" alt="מתחם 2 - תמונה 4">
+        <img src="https://i.ibb.co/mCd3qzKY/20180611-181645.jpg" alt="מתחם 2 - תמונה 5">
+        <img src="https://i.ibb.co/pBBWQD4v/20180611-181830.jpg" alt="מתחם 2 - תמונה 6">
+        <img src="https://i.ibb.co/pBjGGb4Y/20180611-181839.jpg" alt="מתחם 2 - תמונה 7">
+        <img src="https://i.ibb.co/Mx9r3gtc/20180611-181846.jpg" alt="מתחם 2 - תמונה 8">
+        <img src="https://i.ibb.co/CXTfKBf/20180611-181853.jpg" alt="מתחם 2 - תמונה 9">
+        <img src="https://i.ibb.co/9HNLQ8zM/20180611-181924.jpg" alt="מתחם 2 - תמונה 10">
+        <img src="https://i.ibb.co/Q3GJ48Jz/20180611-182006.jpg" alt="מתחם 2 - תמונה 11">
+        <img src="https://i.ibb.co/vvMThMkC/20180611-182016.jpg" alt="מתחם 2 - תמונה 12">
+        <img src="https://i.ibb.co/67pZmQKb/20180611-181516.jpg" alt="מתחם 2 - תמונה 13">
+      </div>
+      <span class="arrow right" onclick="nextSlide('slider-area2')">&#10095;</span>
     </div>
   </div>
 
   <footer>
-    <span style="color: green;">📞</span> 052-281-5211 | ✉️ mendyf862@gmail.com
+    <span class="icon-green">📞</span> 052-281-5211 | ✉️ mendyf862@gmail.com
   </footer>
 
-  <!-- Accessibility Panel -->
-  <div class="accessibility-panel">
+  <button id="accessibility-toggle-button" onclick="toggleAccessibilityPanel()">
+    נגישות
+  </button>
+
+  <div class="accessibility-panel" id="accessibility-panel">
     <button onclick="toggleClass('large-text')">שנה גודל טקסט</button>
     <button onclick="toggleClass('high-contrast')">שנה ניגודיות</button>
     <button onclick="toggleClass('highlight-links')">הדגש קישורים</button>
@@ -250,55 +370,66 @@
   </div>
 
   <script>
-    const images = {
-      slider1: [
-        "https://i.ibb.co/cKbKjKC1/1.jpg",
-        "https://i.ibb.co/qF1LQ0XP/2.jpg",
-        "https://i.ibb.co/MxzLg3nf/3.jpg",
-        "https://i.ibb.co/dJ0BxSrq/20180603-130208.jpg",
-        "https://i.ibb.co/pjsfCMnj/20180603-130218.jpg",
-        "https://i.ibb.co/f3q7ZPh/20180603-130229.jpg",
-        "https://i.ibb.co/xSnTZ6yB/20180603-130239.jpg",
-        "https://i.ibb.co/SwT3ksXm/20180603-130259.jpg"
-      ],
-      slider2: [
-        "https://i.ibb.co/FL7P7vVN/20180611-181534.jpg",
-        "https://i.ibb.co/YB0yHBd4/20180611-181553.jpg",
-        "https://i.ibb.co/84SX3H9L/20180611-181627.jpg",
-        "https://i.ibb.co/sp3m3Ctm/20180611-181638.jpg",
-        "https://i.ibb.co/mCd3qzKY/20180611-181645.jpg",
-        "https://i.ibb.co/pBBWQD4v/20180611-181830.jpg",
-        "https://i.ibb.co/pBjGGb4Y/20180611-181839.jpg",
-        "https://i.ibb.co/Mx9r3gtc/20180611-181846.jpg",
-        "https://i.ibb.co/CXTfKBf/20180611-181853.jpg",
-        "https://i.ibb.co/9HNLQ8zM/20180611-181924.jpg",
-        "https://i.ibb.co/Q3GJ48Jz/20180611-182006.jpg",
-        "https://i.ibb.co/vvMThMkC/20180611-182016.jpg",
-        "https://i.ibb.co/67pZmQKb/20180611-181516.jpg"
-      ]
-    };
-
-    const indices = { slider1: 0, slider2: 0 };
+    // שינוי במבנה הנתונים - לא נשמור כאן נתיבים, אלא ננהל את הסליידרים ישירות
+    const slideIndices = { 'slider-area1': 0, 'slider-area2': 0 }; // ישמור את האינדקס של התמונה הנוכחית לכל סליידר
 
     function showSection(id) {
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      // כשמציגים סקשן חדש, ודא שהסליידר שלו מתחיל מהתמונה הראשונה
+      const sliderId = `slider-${id}`; // לדוגמה 'slider-area1'
+      if (document.getElementById(sliderId)) {
+        slideIndices[sliderId] = 0;
+        updateSlide(sliderId); // הצג את התמונה הראשונה
+      }
     }
 
-    function nextSlide(id) {
-      indices[id] = (indices[id] + 1) % images[id].length;
-      document.getElementById(id).src = images[id][indices[id]];
+    function updateSlide(sliderId) {
+        const sliderElement = document.getElementById(sliderId);
+        const slidesContainer = sliderElement.querySelector('.slides-container');
+        const images = slidesContainer.querySelectorAll('img');
+        const currentSlideIndex = slideIndices[sliderId];
+
+        // ודא שהאינדקס תקין
+        if (images.length === 0) return; // אין תמונות בסליידר
+
+        // חישוב ההזזה
+        const offset = -currentSlideIndex * 100; // הזז ב-100% לכל רוחב תמונה
+        slidesContainer.style.transform = `translateX(${offset}%)`;
     }
 
-    function prevSlide(id) {
-      indices[id] = (indices[id] - 1 + images[id].length) % images[id].length;
-      document.getElementById(id).src = images[id][indices[id]];
+    function nextSlide(sliderId) {
+      const slidesContainer = document.getElementById(sliderId).querySelector('.slides-container');
+      const images = slidesContainer.querySelectorAll('img');
+      slideIndices[sliderId] = (slideIndices[sliderId] + 1) % images.length;
+      updateSlide(sliderId);
     }
 
+    function prevSlide(sliderId) {
+      const slidesContainer = document.getElementById(sliderId).querySelector('.slides-container');
+      const images = slidesContainer.querySelectorAll('img');
+      slideIndices[sliderId] = (slideIndices[sliderId] - 1 + images.length) % images.length;
+      updateSlide(sliderId);
+    }
+
+    // פונקציית טוגל קלאס כללית ל-body
     function toggleClass(className) {
       document.body.classList.toggle(className);
     }
+
+    // פונקציה לפתיחה/סגירה של פאנל הנגישות
+    function toggleAccessibilityPanel() {
+        document.getElementById('accessibility-panel').classList.toggle('active');
+    }
+
+    // קריאה ראשונית להצגת התמונה הראשונה בכל סליידר כאשר הדף נטען
+    document.addEventListener('DOMContentLoaded', () => {
+        // ודא שכל הסליידרים מעודכנים לתמונה הראשונה במצב התחלתי
+        Object.keys(slideIndices).forEach(id => {
+            updateSlide(id);
+        });
+    });
   </script>
 
 </body>
